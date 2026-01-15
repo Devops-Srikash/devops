@@ -1,6 +1,14 @@
 #!/bin/bash
-
-helper()
+#
+##################################################
+#
+# About: Script for listing the users in the git repository
+#
+# Date: 15/01/2026
+#
+# Owner: Srikash
+#
+###################################################
 
 # GitHub API URL
 API_URL="https://api.github.com"
@@ -14,7 +22,7 @@ REPO_OWNER=$1
 REPO_NAME=$2
 
 # Function to make a GET request to the GitHub API
-function github_api_get {
+function github_api_get() {
     local endpoint="$1"
     local url="${API_URL}/${endpoint}"
 
@@ -23,7 +31,7 @@ function github_api_get {
 }
 
 # Function to list users with read access to the repository
-function list_users_with_read_access {
+function list_users_with_read_access() {
     local endpoint="repos/${REPO_OWNER}/${REPO_NAME}/collaborators"
 
     # Fetch the list of collaborators on the repository
@@ -38,14 +46,16 @@ function list_users_with_read_access {
     fi
 }
 
-function helper{
-expected_cmd-args=2
-if[ $# -ne $expected_cmd_args ]; then
-echo "please excute the script with the required cmd args"
-echo "asd"
+function helper(){
+    expected_cmd_args=2
+    if [ $# -ne $expected_cmd_args ]; then
+    echo "please excute the script with the required cmd args"
+    echo "Usage: $0 <repo_owner> <repo_name>"
+    exit 1
+    fi
 }
 
 # Main script
-
+helper "$@"
 echo "Listing users with read access to ${REPO_OWNER}/${REPO_NAME}..."
 list_users_with_read_access
